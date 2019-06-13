@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[brain's base]]></title><description><![CDATA[My blog.]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 13 Jun 2019 04:53:03 GMT</lastBuildDate><item><title><![CDATA[Data fetching and debugging with React hooks]]></title><description><![CDATA[The benefits of Redux are well documented. It has predictability, testability, and an entire ecosystem of support. When your users don't…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//2019-06-12-2019-data-fetching-with-hooks/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//2019-06-12-2019-data-fetching-with-hooks/</guid><pubDate>Wed, 12 Jun 2019 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The benefits of Redux are well documented. It has predictability, testability, and an entire ecosystem of support. When your users don&apos;t give you the best repro steps, the action log can be a lifesaver for determining the steps a user took to get into their current state. You can trace it back to the components or event handlers that triggered those actions. Having state all in one, serializable place is also fantastic for snapshotting and sending in crash logs.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[brain's base]]></title><description><![CDATA[My blog.]]></description><link>https://gatsby-starter-blog-demo.netlify.com/</link><generator>RSS for Node</generator><lastBuildDate>Thu, 13 Jun 2019 05:04:17 GMT</lastBuildDate><item><title><![CDATA[Data fetching and debugging with React hooks]]></title><description><![CDATA[The benefits of Redux are well documented. It has predictability, testability, and an entire ecosystem of support. When your users don't…]]></description><link>https://gatsby-starter-blog-demo.netlify.com//2019-06-12-data-fetching-with-hooks/</link><guid isPermaLink="false">https://gatsby-starter-blog-demo.netlify.com//2019-06-12-data-fetching-with-hooks/</guid><pubDate>Wed, 12 Jun 2019 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;The benefits of Redux are well documented. It has predictability, testability, and an entire ecosystem of support. When your users don&apos;t give you the best repro steps, the action log can be a lifesaver for determining the steps a user took to get into their current state. You can trace it back to the components or event handlers that triggered those actions. Having state all in one, serializable place is also fantastic for snapshotting and sending in crash logs.&lt;/p&gt;
 &lt;p&gt;But sometimes, you want a scalpel, and Redux et al can feel like a jackhammer. What if I just want to fetch some state and not throw it in a global store? It just needs to live as long as this component or its sub-tree does. That&apos;s where hooks come in!&lt;/p&gt;
 &lt;h2&gt;Introducing useFetch!&lt;/h2&gt;
 &lt;p&gt;First, let&apos;s start with a basic &lt;code class=&quot;language-text&quot;&gt;useFetch&lt;/code&gt; custom hook that just handles GETs:&lt;/p&gt;
@@ -48,7 +48,11 @@
     &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;Fallback &lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
-  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;UserContext&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Provider value&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;user&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; children &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;UserContext&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Provider&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;UserContext&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Provider value&lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;user&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; children &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;token operator&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;/&lt;/span&gt;UserContext&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;Provider&lt;span class=&quot;token operator&quot;&gt;&gt;&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;ProfileBanner&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
@@ -79,10 +83,10 @@
 &lt;h2&gt;Introducing useSnapshot!&lt;/h2&gt;
 &lt;p&gt;And so I set off to find a way to have my cake and eat it too. That&apos;s when I came up with the idea for a &lt;code class=&quot;language-text&quot;&gt;useSnapshot&lt;/code&gt; custom hook and a few creative uses of context to support snapshotting React state as well as Redux state to send in our debug logs:&lt;/p&gt;
 &lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;javascript&quot;&gt;&lt;pre class=&quot;language-javascript&quot;&gt;&lt;code class=&quot;language-javascript&quot;&gt;&lt;span class=&quot;token keyword&quot;&gt;import&lt;/span&gt; React&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-	useState&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-	useReducer&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-	useEffect&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
-	useContext
+  useState&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  useReducer&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  useEffect&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  useContext
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;react&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
 &lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; SnapshotDispatch &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; React&lt;span class=&quot;token punctuation&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;token function&quot;&gt;createContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
@@ -119,13 +123,16 @@
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
 &lt;span class=&quot;token comment&quot;&gt;/**
- * useSnapshot will save anything available in a component&apos;s render to send in a debug log.
- * @param {string} key An identifier for the data, such a component name + url.
+ * useSnapshot will save anything available in a component&apos;s
+ * render to send in a debug log or something.
+ * @param {string} key An identifier for the data.
  * @param {object} value The data to send in a debug log.
- * @param {boolean} shouldSave Specify whether the data should be saved.
- *  For example, `useSnapshot(&apos;Component &apos; + url, data, data &amp;amp;&amp;amp; data.id !== props.id)`
- *  will only send the data once it has been loaded and does not match the shape you&apos;d expect.
- *  Ignore this param if you&apos;d like to always save a snapshot of the value.
+ * @param {boolean} shouldSave Specify whether the data
+ *  should be saved. For example...
+ * `useSnapshot(&apos;XX:&apos;+url, data, data &amp;amp;&amp;amp; data.id !== props.id)`
+ *  will only send the data once it has been loaded
+ *  and does not match the shape you&apos;d expect.
+ *  Ignore this param if you&apos;d like to always save a snapshot.
  */&lt;/span&gt;
 &lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;useSnapshot&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; shouldSave &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;token keyword&quot;&gt;const&lt;/span&gt; dispatch &lt;span class=&quot;token operator&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;useContext&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;SnapshotDispatch&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
