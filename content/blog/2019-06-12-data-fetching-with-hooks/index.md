@@ -66,7 +66,11 @@ export function UserProvider({ id, children }) {
     return <Fallback />;
   }
 
-  return <UserContext.Provider value={user}>{ children }</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={user}>
+      { children }
+    </UserContext.Provider>
+  );
 }
 
 export function ProfileBanner() {
@@ -108,10 +112,10 @@ And so I set off to find a way to have my cake and eat it too. That's when I cam
 
 ```javascript
 import React, {
-	useState,
-	useReducer,
-	useEffect,
-	useContext
+  useState,
+  useReducer,
+  useEffect,
+  useContext
 } from 'react';
 
 export const SnapshotDispatch = React.createContext(() => null);
@@ -148,13 +152,16 @@ export function SnapshotWrapper({ children }) {
 }
 
 /**
- * useSnapshot will save anything available in a component's render to send in a debug log.
- * @param {string} key An identifier for the data, such a component name + url.
+ * useSnapshot will save anything available in a component's
+ * render to send in a debug log or something.
+ * @param {string} key An identifier for the data.
  * @param {object} value The data to send in a debug log.
- * @param {boolean} shouldSave Specify whether the data should be saved.
- *  For example, `useSnapshot('Component ' + url, data, data && data.id !== props.id)`
- *  will only send the data once it has been loaded and does not match the shape you'd expect.
- *  Ignore this param if you'd like to always save a snapshot of the value.
+ * @param {boolean} shouldSave Specify whether the data
+ *  should be saved. For example...
+ * `useSnapshot('XX:'+url, data, data && data.id !== props.id)`
+ *  will only send the data once it has been loaded
+ *  and does not match the shape you'd expect.
+ *  Ignore this param if you'd like to always save a snapshot.
  */
 export function useSnapshot(key, value, shouldSave = true) {
   const dispatch = useContext(SnapshotDispatch);
