@@ -4,6 +4,7 @@ date: "2019-06-12T12:00:00.000Z"
 description: How to fetch data and save state for debugging enterprise apps... with hooks!
 ---
 
+Hooks are the new hotness, and everyone has their own version for how to fetch data. That's the easy part. But when you're building, maintaining, and debugging an enterprise web app, the opportunity cost is likely Redux and its ecosystem. And I think I have something that puts the onus on Redux to justify itself for certain use cases.
 
 (There's no TL;DR, but if you want to get to my solution, you can just scroll to the bottom code segment. Otherwise, let me regale you with the journey of an enterprise web dev sick of using Redux for everything.)
 
@@ -13,6 +14,7 @@ But sometimes, you want a scalpel, and Redux et al can feel like a jackhammer. W
 
 ## Introducing useFetch!
 
+First, let's start with a basic `useFetch` custom hook that just handles GETs. (There are _so_ many Medium blogs about `useFetch`. Although, I've seen quite a few that have the `setState` memory leak.)
 
 ```javascript
 import { useState, useEffect } from 'react';
