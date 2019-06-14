@@ -4,13 +4,15 @@ date: "2019-06-12T12:00:00.000Z"
 description: How to fetch data and save state for debugging enterprise apps... with hooks!
 ---
 
-The benefits of Redux are well documented. It has predictability, testability, and an entire ecosystem of support. When your users don't give you the best repro steps, the action log can be a lifesaver for determining the steps a user took to get into their current state. You can trace it back to the components or event handlers that triggered those actions. Having state all in one, serializable place is also fantastic for snapshotting and sending in crash logs.
 
-But sometimes, you want a scalpel, and Redux et al can feel like a jackhammer. What if I just want to fetch some state and not throw it in a global store? It just needs to live as long as this component or its sub-tree does. That's where hooks come in!
+(There's no TL;DR, but if you want to get to my solution, you can just scroll to the bottom code segment. Otherwise, let me regale you with the journey of an enterprise web dev sick of using Redux for everything.)
+
+So, yes, the benefits of Redux are well documented. It has predictability, testability, and an entire ecosystem of support. When your users don't give you the best repro steps, the action log can be a lifesaver for determining the steps a user took to get into their current state. You can trace it back to the components or event handlers that triggered those actions. Having state all in one, serializable place is also fantastic for snapshotting and sending in crash logs.
+
+But sometimes, you want a scalpel, and Redux et al can feel like a jackhammer. What if you just want to fetch some state and _not_ throw it in a global store? It just needs to live as long as this component or its sub-tree does. That's where hooks come in!
 
 ## Introducing useFetch!
 
-First, let's start with a basic `useFetch` custom hook that just handles GETs:
 
 ```javascript
 import { useState, useEffect } from 'react';
@@ -46,7 +48,7 @@ export function useFetch(url) {
 
 Given a truthy URL, it will attempt to fetch the data. Initially, data is `null` to signify loading or no request. On success, it'll set the data and return it. On error, it'll set the data as a special error Symbol that can be compared to. `shouldRun` is a boolean flag telling the effect whether it should call `setData`, because the effect could've been re-run due to the URL changing, or the component being unmounted.
 
-This is super simple and easy to use for set-and-forget types of data. I'd still recommend Redux for data that lives outside of any component's lifecycle, is truly global, updates frequently (e.g., through WebSockets), or has complicated update logic.
+Overall, this is super simple and easy to use for set-and-forget types of data.
 
 *Caveat:* I don't know how this will play with Suspense for data fetching, but for now, this suffices for those cases we just need to get some data that isn't long for this world. I imagine it wouldn't be too difficult to transition to the Suspense API, but who knows? 
 
@@ -94,7 +96,7 @@ export function MemberList({ members }) {
 }
 ```
 
-No HOCs, no action creators, no reducers, no thunks, no indirection. Just pure React. Of course, this is a contrived example of not-real code. But I wanted to demonstrate the simplicity yet power of custom hooks.
+No HOCs, no action creators, no reducers, no thunks, no indirection. Just pure React. Of course, this is a contrived example of not-real code. But I wanted to demonstrate the simplicity and power of custom hooks.
 
 There's a clear parent-child relationship again with unidirectional data flow. This makes it obvious when there's a problem: it's either in the API (I hope your service teams have good logs!), the parent that fetched the data, or the child that consumed it. You have to clearly place your children inside contexts that give them the data you need; create and provide those contexts yourself, or pass them as props the old-fashioned way; or you need to lift another provider up. This explicitness eliminates some of the footguns of using Redux for data fetching. When something goes wrong, I don't have to check action creators, reducers, selectors, middlewares, custom loaders, connected components, and so on to figure out the source of the issue.
 
@@ -104,11 +106,11 @@ For me, the explicitness and fewer points of failure were enough, but that wasn'
 
 From another dev's point of view, there's a clear opportunity cost: "If I'm going to be on the hook [no pun intended] for bugs in production, I want to be able to see it in the debug logs." We were so use to storing everything in one place that it was hard to give that up, even for small one-off GETs.
 
-That's a totally fair concern. This is people's money and their livelihoods on the line. It's a hard sell for someone who hasn't completely drunk the hooks kool-aid like I have.
+That's a totally fair concern. This is people's money and their livelihoods on the line. It's a hard sell for someone who hasn't completely drunk the hooks kool-aid like I have. How do I alleviate that concern?
 
 ## Introducing useSnapshot!
 
-And so I set off to find a way to have my cake and eat it too. That's when I came up with the idea for a `useSnapshot` custom hook and a few creative uses of context to support snapshotting React state as well as Redux state to send in our debug logs:
+And so I set off to find a way to have my cake and eat it too. That's when I came up with the idea for a `useSnapshot` custom hook and a few creative uses of context to support snapshotting React state to send in our debug logs, in addition to Redux:
 
 ```javascript
 import React, {
@@ -152,16 +154,16 @@ export function SnapshotWrapper({ children }) {
 }
 
 /**
- * useSnapshot will save anything available in a component's
- * render to send in a debug log or something.
+ * useSnapshot will save anything available in render
+ * to send in a debug log or something.
  * @param {string} key An identifier for the data.
  * @param {object} value The data to send in a debug log.
  * @param {boolean} shouldSave Specify whether the data
  *  should be saved. For example...
- * `useSnapshot('XX:'+url, data, data && data.id !== props.id)`
- *  will only send the data once it has been loaded
+ * `useSnapshot('X:'+url, data, data && data.id !== props.id)`
+ *  will only save the data once it has been loaded
  *  and does not match the shape you'd expect.
- *  Ignore this param if you'd like to always save a snapshot.
+ *  Ignore this if you'd like to always save a snapshot.
  */
 export function useSnapshot(key, value, shouldSave = true) {
   const dispatch = useContext(SnapshotDispatch);
@@ -172,11 +174,13 @@ export function useSnapshot(key, value, shouldSave = true) {
       dispatch({ type: 'save', key, value });
     }
   }, [key, value, shouldSave, shouldSnapshot, dispatch]);
+
+  return null;
 }
 
 // Wrap your report-a-problem component (or equivalent)
-// with this so that when it mounts, it will trigger useSnapshot
-// to report back its state!
+// with this so that when it mounts, it will trigger
+// useSnapshot to report back its state!
 export function ReportProblemWrapper() {
   const dispatch = useContext(SnapshotDispatch);
   const state = useContext(StateSnapshot);
@@ -201,8 +205,6 @@ Basically, `<SnapshotWrapper />` provides the app with a few functions, a boolea
 - `SetShouldSnapshot` is used by `<ReportProblemWapper />` to tell users of `useSnapshot` to save their current values.
 - `ShouldSnapshot` is used by `useSnapshot` to determine whether it should save its current value.
 
-Thanks to the new [`useContext` hook](https://reactjs.org/docs/hooks-reference.html#usecontext), context is so much more ergonomic!
+With this, whenever someone fetches data through `useFetch` instead of a thunk, they can pair it with `useSnapshot` to save data to send in crash logs. Of course, you can technically save anything that's available in render, but I think saving the results of data fetching is where a lot of apprehension comes from.
 
-The React team really nailed it with hooks. I'm able to encapsulate logic that can be reused easily between wildly different components. I can even compose multiple `useFetch`es or `useSnapshot`s in one component if I wanted. The possibilities are endless! I look forward to seeing what custom hooks the community and my team comes up with as we encounter new problems with this new tool in our belt.
-
-Anyway, for anyone else who runs into the issue of saving React state or weaning themselves off Redux, I hope this helps. :)
+So, for anyone else who runs into the issue of saving React state or weaning themselves off Redux, I hope this helps. :)
