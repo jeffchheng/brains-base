@@ -4,6 +4,8 @@ date: "2019-08-02T12:00:00.000Z"
 description: A custom hook for setting state without memory leaks.
 ---
 
+A custom hook for setting state without memory leaks.
+
 If you just want to see the custom hook implementation in action, [check out this Code Sandbox](https://codesandbox.io/embed/ecstatic-hooks-nd0ky). Otherwise, read on for my ramblings on the problem space and path to a solution.
 
 # The problem
