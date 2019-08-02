@@ -21,38 +21,30 @@ cleanup function.
 
 Whether it's due to a `setTimeout` or a Promise resolving too late, it happens. There are already a few solutions out there to fix this.
 
-For example, when implementing setState in a custom hook for data fetching, you need to set a boolean and check before setting state. This will prevent setStates when props have changed _and_ component unmount.
+For example, when implementing setState in a [custom hook for data fetching](https://jeffchheng.github.io/brains-base/2019-06-12-data-fetching-with-hooks/), you need to set a boolean and check before setting state. This will prevent setStates when props have changed _and_ component unmount.
 
 ```javascript
-import { useState, useEffect } from 'react';
+// ...
+useEffect(() => {
+  let shouldRun = true;
 
-export const ERROR = Symbol('error');
+  if (url) {
+    fetch(url)
+      .then(res => {
+        if (res.ok) {
+          return res.json();
+        }
+        throw new Error('not ok');
+      })
+      .then(res => shouldRun && setData(res))
+      .catch(err => shouldRun && setData(ERROR));
+  }
 
-export function useFetch(url) {
-  const [data, setData] = useState(null);
-  
-  useEffect(() => {
-    let shouldRun = true;
-
-    if (url) {
-      fetch(url)
-        .then(res => {
-          if (res.ok) {
-            return res.json();
-          }
-          throw new Error('not ok');
-        })
-        .then(res => shouldRun && setData(res))
-        .catch(err => shouldRun && setData(ERROR));
-    }
-
-    return () => {
-      shouldRun = false;
-    }
-  }, [url])
-
-  return data;
-}
+  return () => {
+    shouldRun = false;
+  }
+}, [url]);
+// ...
 ```
 
 In a class component, you can set an [instance variable](https://reactjs.org/blog/2015/12/16/ismounted-antipattern.html).
@@ -98,8 +90,8 @@ function useStateSafely(initialValue) {
   const isSafe = useRef(true);
 
   useEffect(() => {
-    // Future proofing for double-invoking effects
-    // in Strict Mode.
+    // Future proofing for double-invoking
+    // effects in Strict Mode.
     isSafe.current = true;
     return () => {
       isSafe.current = false;
@@ -147,4 +139,8 @@ export function useDebounce(value, delay) {
 }
 ```
 
-Still, even though this blog is about using `setState` without memory leaks, I would not recommend wholesale replacing `useState` with this version. It's more an escape hatch for rare cases. You should carefully consider other, better patterns for avoiding memory leaks. But sometimes, we don't have that luxury in app development, so I hope this helps in those cases.
+# Final thoughts
+
+Even though this blog is about using `setState` without memory leaks, I would not recommend wholesale replacing `useState` with this version. It's more an escape hatch for rare cases.
+
+You should carefully consider other, better patterns for avoiding memory leaks. But sometimes, we don't have that luxury in app development, so I hope this helps in those cases.
