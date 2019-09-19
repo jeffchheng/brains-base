@@ -4,6 +4,10 @@ date: "2019-06-12T12:00:00.000Z"
 description: How to fetch data and save state for debugging enterprise apps... with hooks!
 ---
 
+UPDATE (2019-09-18): I've published [useSnapshot as a package on npm](https://www.npmjs.com/package/use-snapshot). Please check out the package, [the implementation on GitHub](https://github.com/jeffchheng/use-snapshot/blob/master/src/index.js), and/or [the Code Sandbox](https://codesandbox.io/embed/use-snapshot-demo-v3eje) for the latest and greatest.
+
+-----
+
 Hooks are the new hotness, and everyone has their own version for how to fetch data. That's the easy part. But when you're building, maintaining, and debugging an enterprise web app, the opportunity cost is likely Redux and its ecosystem. And I think I have something that puts the onus on Redux to justify itself for certain use cases.
 
 (There's no TL;DR, but if you want to get to my solution, you can just scroll to the bottom code segment. Otherwise, let me regale you with the journey of an enterprise web dev sick of using Redux for everything.)
