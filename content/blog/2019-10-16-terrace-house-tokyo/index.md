@@ -38,7 +38,7 @@ He's really opinionated in his ideas about work and living his own life that I r
 
 Still, he's a good listener, and I constantly see him taking in what others are saying and giving really good life advice that aren't just pre-canned platitudes.
 
-I also love how good he is at cooking! Notable dishes include his green curry and lu rou fan. They looked straight out of a restaurant. Maybe if acting doesn't work out for him
+I also love how good he is at cooking! Notable dishes include his green curry and lu rou fan. They looked straight out of a restaurant. Maybe if acting doesn't work out for him, he can become a chef.
 
 ## Haruka Okuyama, 24, actress
 
