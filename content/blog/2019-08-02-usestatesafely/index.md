@@ -8,7 +8,7 @@ A custom hook for setting state without memory leaks.
 
 If you just want to see the custom hook implementation in action, [check out this Code Sandbox](https://codesandbox.io/embed/ecstatic-hooks-nd0ky). Otherwise, read on for my ramblings on the problem space and path to a solution.
 
-# The problem
+## The problem
 
 We've all seen this error before:
 
@@ -84,7 +84,7 @@ But in the end, it's the same principal that will allow for implementing a safe 
 
 That's where [refs](https://reactjs.org/docs/hooks-faq.html#is-there-something-like-instance-variables) come in. On component mount, you can initialize the ref to `true`, an analog to `this._mounted = true`. Then, on unmount, you can set the ref to `false`, the equivalent of `this._mounted = false;`. Putting this together...
 
-# The solution: useStateSafely!
+## The solution: useStateSafely!
 
 ```javascript
 function useStateSafely(initialValue) {
@@ -114,7 +114,7 @@ This has the same public API as useState*, but will not log an error when you at
 
 (*setState will log an error if you pass in more than one arg, but effectively the same outcome. Feel free to change `newValue` to `...args` to more accurately simulate setState.)
 
-# Where would I use this?
+## Where would I use this?
 
 There are a couple use cases, I think.
 
@@ -141,7 +141,7 @@ export function useDebounce(value, delay) {
 }
 ```
 
-# Final thoughts
+## Final thoughts
 
 Even though this blog is about using `setState` without memory leaks, I would not recommend wholesale replacing `useState` with this version. It's more an escape hatch for rare cases.
 

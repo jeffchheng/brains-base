@@ -16,11 +16,11 @@ Second, I love the increased focus on the panel. The segments feel a little long
 
 They've really hit their stride, and the rapport is great; Baba is talking now, Triendl/Torichan has taken on a leading role, and Yamasato is the butt of even more Virgin-at-Heart jokes. 
 
-# Main Cast
+## Main Cast
 
 Let's move onto my thoughts about the main cast.
 
-## Kaori Watanabe, 28, illustrator
+### Kaori Watanabe, 28, illustrator
 
 Initial impression: shy, insecure, humble, driven.
 
@@ -30,7 +30,7 @@ She doesn't like to toot her own horn, but I think she does take great pride in 
 
 Overall, Kaori is a queen and only deserves the best.
 
-## Shohei Matsuzaki, 25, actor/writer
+### Shohei Matsuzaki, 25, actor/writer
 
 Initial impression: cocky, good listener, somehow gives the best life advice.
 
@@ -40,7 +40,7 @@ Still, he's a good listener, and I constantly see him taking in what others are 
 
 I also love how good he is at cooking! Notable dishes include his green curry and lu rou fan. They looked straight out of a restaurant. Maybe if acting doesn't work out for him, he can become a chef.
 
-## Haruka Okuyama, 24, actress
+### Haruka Okuyama, 24, actress
 
 Initial impression: haughty, conniving, wears her heart on her sleeve.
 
@@ -48,7 +48,7 @@ For someone who's an actress, Haruka is really bad at hiding her emotions. Every
 
 Her moderate success in acting doesn't necessarily result in her directly bragging about things, but she'll definitely humblebrag or argue her views with others. I'm also not a fan of how she always tries to (even admits this in an interview) go after men who are already spoken for.
 
-## Kenji "Kenny" Yoshihara, 31, musician
+### Kenji "Kenny" Yoshihara, 31, musician
 
 Initial impression: cool, emotionally distant, kinda worthless and maybe self-serving.
 
@@ -60,7 +60,7 @@ The advice he gives is also so shallow, word for word: "Don't worry about it, ev
 
 It hurts me that I really like his music when he's such a trash cast member right now. In cases like these, I wish the producers could force people to leave sooner.
 
-## Risako Tanabe, 21, fitness trainer
+### Risako Tanabe, 21, fitness trainer
 
 Initial impression: sweet, hard-working, straightforward.
 
@@ -68,7 +68,7 @@ She came off as very fun-loving and hard-working initially. It wasn't until late
 
 She definitely reminded me that first impressions aren't everything.
 
-## Ruka Nishinori, 20, part-time retail worker
+### Ruka Nishinori, 20, part-time retail worker
 
 Initial impression: pure, cute.
 
@@ -78,7 +78,7 @@ At first, he wanted to be a hero, then he clarified that to mean starring in a M
 
 He's the best argument against not having really young people who aren't established yet. There are obviously exceptions like Yusuke Aizawa and Risako Tanabe who are actually talented or know what they're doing in life.
 
-# Highlights
+## Highlights
 
 Tempura Incident was great. Two clashing ideologies of traditional versus new age. It totally reminded me of the Dream Police incident in BGITC, although Haruka didn't catch as much flak as Tap did.
 
@@ -94,7 +94,7 @@ Kaori's vulnerable scene where she questioned her ability as an artist was so he
 
 Once again, every studio segment was great. I need to find a super cut, because they were all laugh-out-loud funny.
 
-# Final thoughts
+## Final thoughts
 
 In the early episodes, the cast had such great chemistry. Everyone was vibing and getting along. It wasn't until halfway through that the cracks really started to show: unrequited love, love triangles, and useless members.
 
