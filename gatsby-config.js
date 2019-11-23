@@ -4,7 +4,7 @@ module.exports = {
     title: `brain's base`,
     author: `Jeff Chheng`,
     description: `My blog.`,
-    siteUrl: `https://gatsby-starter-blog-demo.netlify.com/`,
+    siteUrl: `https://jeffchheng.github.io/brains-base/`,
     social: {
       twitter: `jeffchheng`,
     },
@@ -44,13 +44,13 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `Gatsby Starter Blog`,
+        name: `brain's base`,
         short_name: `GatsbyJS`,
         start_url: `/`,
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/gatsby-icon.png`,
+        icon: `content/assets/compass.png`,
       },
     },
     `gatsby-plugin-offline`,
