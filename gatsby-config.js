@@ -50,7 +50,7 @@ module.exports = {
         background_color: `#ffffff`,
         theme_color: `#663399`,
         display: `minimal-ui`,
-        icon: `content/assets/compass.png`,
+        icon: `content/assets/beginner.png`,
       },
     },
     `gatsby-plugin-offline`,
