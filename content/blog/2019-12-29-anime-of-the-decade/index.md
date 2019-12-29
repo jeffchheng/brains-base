@@ -6,9 +6,9 @@ description: AKA the one anime I watched each year.
 
 AKA the one anime I watched each year.
 
-## 2010: Katanagari
+## 2010: Katanagatari
 
-![Katanagari](./katanagatari.jpg)
+![Katanagatari](./katanagatari.jpg)
 
 It's been a while since I watched this. The biggest standouts were the sharp art style, hype music, and memorable main characters. I'll never forget those final two episodes. It's one of the few shows with high stakes battles. Worth it for the stylized art direction alone.
 
