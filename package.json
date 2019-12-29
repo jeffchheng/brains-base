@@ -39,7 +39,7 @@
     "gh-pages": "^2.1.1",
     "prettier": "^1.19.1"
   },
-  "homepage": "https://github.com/gatsbyjs/gatsby-starter-blog#readme",
+  "homepage": "https://jeffchheng.github.io/brains-base/",
   "keywords": [
     "gatsby"
   ],
@@ -47,7 +47,7 @@
   "main": "n/a",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gatsbyjs/gatsby-starter-blog.git"
+    "url": "git+https://github.com/jeffchheng/brains-base.git"
   },
   "scripts": {
     "build": "gatsby build",
