@@ -53,7 +53,7 @@ Ufotable's animation is always incredible. And with the story largely set up in 
 
 I didn't actually watch this until recently, but I have to give _Food Wars!_ a shout-out for being really out there with the anime tropes but still being accessible to the general audience. Just... don't watch it with your parents or kids.
 
-Nicole, being a foodie, wanted to watch this, and it was one of the early gateway anime to get to watch more with me.
+Nicole, being a foodie, wanted to watch this, and it was one of the early gateway anime to get her to watch more with me.
 
 ## 2016: ERASED
 
