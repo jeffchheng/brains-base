@@ -59,7 +59,7 @@ Nicole, being a foodie, wanted to watch this, and it was one of the early gatewa
 
 ![ERASED](./erased.jpg)
 
-Time travel _and_ a murder mystery? It's like this show was made for me. _ERASED_ is one of the greatest thrillers I've ever seen. The tension gets almost overbearing as you wonder how some elementary school kids will thwart a serial killer. Even if you guess who the killer is, the premise doesn't allow for an easy out. You're stuck watching the tragedy unfold alonside Satoru.
+Time travel _and_ a murder mystery? It's like this show was made for me. _ERASED_ is one of the greatest thrillers I've ever seen. The tension gets almost overbearing as you wonder how some elementary school kids will thwart a serial killer. Even if you guess who the killer is, the premise doesn't allow for an easy out. You're stuck watching the tragedy unfold alongside Satoru.
 
 ### 2016 Runner Up: My Hero Academia
 
@@ -73,7 +73,7 @@ This was a tough choice, but the consistently high quality and tight story telli
 
 I watched _Your Name_ at least 4 times in theaters, and I noticed something new every single time.
 
-This movie is a masterclass in editing. The way scenes are cut together serve to set up the premise, convey how Taki and Mitsuha feel, and throw the viewer off the scent. 😉
+This movie is a masterclass in editing with the way scenes are cut together serve to set up the premise, convey how Taki and Mitsuha feel, and throw the viewer off the scent. 😉
 
 The plot is fantastical, yes, but it's woven tightly. There's never a dull moment here when each scene is bursting with foreshadowing and beautiful imagery. 
 
@@ -83,7 +83,7 @@ Before this movie, I thought Shinkai was hugely overrated and that there was no 
 
 This is such a sweet slice-of-life, comedy show. Despite the eclectic cast of mythological dragons, the show remains very grounded. It's more about character interactions than anything.
 
-The standout moment was when I accidentally started watching episode 4 as my first episode. Kanna wanted to go to elementary school and was shopping for school supplies. She wanted a cute keychain but noticed Kobayashi commenting she didn't have enough money and to put it on her card. Kanna saw this and put the keychain back. Just... so precious. 😭😭😭
+The standout moment was when I accidentally started watching episode 4 as my first episode. Kanna wanted to go to elementary school and was shopping for school supplies. She wanted a cute keychain but noticed Kobayashi commenting she didn't have enough money and had to put it on her card. Kanna saw this and put the keychain back. So _precious_. 😭😭😭
 
 ### 2017 Honorable Mention #2: Recovery of an MMO Junkie
 
@@ -105,7 +105,7 @@ A lot of shonen try to stall out character arcs or meaningful progress, but not 
 
 Does this count?
 
-_Shadowbringers_ is definitely in my top 2 Final Fantasy stories of all time. The way it treats the Warrior of Light as a real character and humanizes the scheming Ascians were two of my biggest complaints about _Final Fantasy XIV_'s story.
+_Shadowbringers_ is definitely in my top 2 Final Fantasy stories of all time. The way it treats the Warrior of Light as a real character and humanizes the scheming Ascians fixed two of my biggest complaints about _Final Fantasy XIV_'s story.
 
 Emet-Selch is one of the greatest villains in Final Fantasy history, and I hope other writers learn from Natsuko Ishikawa or that she gets her own game to write.
 
@@ -121,4 +121,4 @@ Go watch it!
 
 This decade really flew by. I definitely watched a lot more in the first half than the second half of the decade. I should really change that because I feel like more good shows are coming out, and more people are watching them.
 
-I look forward to seeing what comes out in the 2020s and the trends that emerge. Please, for the love of God, stop all the isekai shows.
+I look forward to seeing what comes out in the 2020s and the trends that emerge. But please, for the love of God, stop all the isekai shows.
