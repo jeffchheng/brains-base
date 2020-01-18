@@ -1,6 +1,6 @@
 ---
 title: November, December, January Movie Roundup
-date: "2020-01-07T12:00:00.000Z"
+date: "2020-01-17T12:00:00.000Z"
 description: Going through the movies I watched in the last few months.
 ---
 
