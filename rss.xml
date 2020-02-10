@@ -1,4 +1,126 @@
-<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[brain's base]]></title><description><![CDATA[My blog.]]></description><link>https://jeffchheng.github.io/brains-base</link><generator>GatsbyJS</generator><lastBuildDate>Sat, 18 Jan 2020 01:14:39 GMT</lastBuildDate><item><title><![CDATA[November, December, January Movie Roundup]]></title><description><![CDATA[Going through the movies I watched in the last few months. Frozen II (November 30) 65 on Metacritic I enjoyed the untraditional story…]]></description><link>https://jeffchheng.github.io/brains-base/2020-01-17-movie-roundup/</link><guid isPermaLink="false">https://jeffchheng.github.io/brains-base/2020-01-17-movie-roundup/</guid><pubDate>Fri, 17 Jan 2020 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Going through the movies I watched in the last few months.&lt;/p&gt;
+<?xml version="1.0" encoding="UTF-8"?><rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" version="2.0"><channel><title><![CDATA[brain's base]]></title><description><![CDATA[My blog.]]></description><link>https://jeffchheng.github.io/brains-base</link><generator>GatsbyJS</generator><lastBuildDate>Mon, 10 Feb 2020 00:08:20 GMT</lastBuildDate><item><title><![CDATA[AWS from a front end engineer's perspective]]></title><description><![CDATA[EC2? ELB? IAM? What? Do you not know much about AWS/infrastructure and wanna learn more, at least a high level? I'll do my best to explain…]]></description><link>https://jeffchheng.github.io/brains-base/2020-02-09-aws-from-front-end-perspective/</link><guid isPermaLink="false">https://jeffchheng.github.io/brains-base/2020-02-09-aws-from-front-end-perspective/</guid><pubDate>Sun, 09 Feb 2020 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;EC2? ELB? IAM? What?&lt;/p&gt;
+&lt;p&gt;Do you not know much about AWS/infrastructure and wanna learn more, at least a high level? I&apos;ll do my best to explain things from a front end engineer&apos;s perspective.&lt;/p&gt;
+&lt;h2&gt;Background&lt;/h2&gt;
+&lt;p&gt;I&apos;ve been working on a project to create a template for bootstrapping apps. It&apos;s Next.js and TypeScript with some boilerplate code that handles OAuth, connecting with our microservices, all that. We want devs to build apps and not worry about configs or tooling. Easy peasy.&lt;/p&gt;
+&lt;p&gt;Alas, a front end solution isn&apos;t enough, because part of our CI/CD infra is reaching EOL. We don&apos;t want to recommend or build on something that&apos;ll have to be replaced soon. And devops and infra is just difficult to manage for every non-devops engineer in general, so why not make that easy too?&lt;/p&gt;
+&lt;p&gt;It took a while, but I eventually got something working that&apos;s much easier to set up and more self-service. Now I&apos;m ready to share all I&apos;ve learned about AWS from the perspective of a front end engineer who initially hated it (and still kind of does).&lt;/p&gt;
+&lt;h2&gt;Onward to AWS&lt;/h2&gt;
+&lt;p&gt;Here are the tools I&apos;ve landed on for somewhat easy-to-use, self-serve, production-ready, and secure web apps.&lt;/p&gt;
+&lt;h3&gt;CodeStar&lt;/h3&gt;
+&lt;p&gt;The template is based on CodeStar.&lt;/p&gt;
+&lt;p&gt;It&apos;s an all-in-one solution by AWS that will provision resources, create a pipeline, create access roles for its service workers, and so on.&lt;/p&gt;
+&lt;p&gt;An admin needs to allow CodeStar access for the entire account, then you simply need someone to add the CodeStar, CodeBuild, CodeDeploy, CodePipeline access policies to your user role and limit the resources to projects under your team&apos;s control, and you&apos;re good to go.&lt;/p&gt;
+&lt;h3&gt;CodeBuild, -Deploy, -Pipeline&lt;/h3&gt;
+&lt;p&gt;CodeBuild handles building from your source (GitHub or CodeCommit). You can specify environment variables through a fairly easy-to-use console.&lt;/p&gt;
+&lt;p&gt;CodeDeploy handles &quot;deployment groups&quot; (i.e., the environments you want to deploy an app, such as test, staging, and prod).&lt;/p&gt;
+&lt;p&gt;CodePipeline ties your source control, build, and deploy into one neat pipeline. You can add actions for test, staging, and prod. One stage flows into the next until everything&apos;s done.&lt;/p&gt;
+&lt;h3&gt;CloudFormation&lt;/h3&gt;
+&lt;p&gt;CodeStar automatically creates a template.yml. In the template, you describe resources you want like &quot;a small server,&quot; &quot;route my traffic to a pretty URL,&quot; &quot;these&apos;re my certifates,&quot; &quot;only let these IPs access my app,&quot; etc.&lt;/p&gt;
+&lt;p&gt;CloudFormation takes that template, compares it with your previous template, and it creates, updates, or deletes the resources you&apos;ve added, changed, or removed.&lt;/p&gt;
+&lt;p&gt;It&apos;s declarative, like React. However, you have to be careful and delibrate when updating the template, or you can confuse CloudFormation, which will require your devops team or AWS support to fix it for you.&lt;/p&gt;
+&lt;p&gt;My rule of them here has been to take things slow and never change the template or retry failed changes until a rollback has completed.&lt;/p&gt;
+&lt;h3&gt;VPC - Virtual Private Cloud&lt;/h3&gt;
+&lt;p&gt;I&apos;ll be honest: I don&apos;t really know how this works. To my knowledge, you have a VPC that sections off your part of the Amazon cloud. So you physically share AWS resources with other companies, but they&apos;re logically separated.&lt;/p&gt;
+&lt;p&gt;Then there are subnets that specify IP ranges that can access to your resources. For example, you can have a private subnet that only allows internal traffic on your company&apos;s network/VPN, in addition to a public subnet for external-facing sites.&lt;/p&gt;
+&lt;p&gt;These can be further limited by security groups, so only resources internal to your section of the cloud can access it.&lt;/p&gt;
+&lt;p&gt;This is the part I know the least about AWS. I&apos;m glad our devops team figured all this out, and I just get to use it.&lt;/p&gt;
+&lt;h3&gt;Route 53&lt;/h3&gt;
+&lt;p&gt;DNS names and forwarding!&lt;/p&gt;
+&lt;p&gt;Here you can define something like &lt;code class=&quot;language-text&quot;&gt;*.company.com&lt;/code&gt; and &lt;code class=&quot;language-text&quot;&gt;*.internalonly.com&lt;/code&gt;. When someone sets up a record like &lt;code class=&quot;language-text&quot;&gt;accounts.internalonly.com&lt;/code&gt;, it will only forward traffic from internal IPs.&lt;/p&gt;
+&lt;h3&gt;EC2 - Elastic Cloud Compute&lt;/h3&gt;
+&lt;p&gt;You rent servers (instances) from Amazon and pay per hour of use.&lt;/p&gt;
+&lt;p&gt;You can limit access through the VPC, subnets, and security groups. As far as I can tell, you can&apos;t even access an EC2 instance with a public IP if it&apos;s on a private subnet. Still, I&apos;d set a security group to be sure.&lt;/p&gt;
+&lt;h3&gt;ELB - Elastic Load Balancing&lt;/h3&gt;
+&lt;p&gt;So you have an EC2 instance or many, and they have really hard to remember IPs like &lt;code class=&quot;language-text&quot;&gt;10.0.150.1&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;10.0.160.1&lt;/code&gt;? Setting up an Application Load Balancer (ALB) will handle traffic and pass it to the correct instance. This is helpful if you have instances in multiple geographic locations, and you want to make sure users connect to the fastest one for them.&lt;/p&gt;
+&lt;p&gt;You have a listener on the ALB for traffic on port 443 with an SSL certificate, for example. You define a target group as the EC2 instance&apos;s port 80 (where your app is running).&lt;/p&gt;
+&lt;p&gt;Finally, you need to define a Route 53 record set that describes your hosted zone (e.g., &lt;code class=&quot;language-text&quot;&gt;internalonly.com&lt;/code&gt; or &lt;code class=&quot;language-text&quot;&gt;company.com&lt;/code&gt;) and the actual name you want like &lt;code class=&quot;language-text&quot;&gt;accounts.internalonly.com&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;When someone hits &lt;code class=&quot;language-text&quot;&gt;https://accounts.internalonly.com&lt;/code&gt;,&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;Route 53 sees a matching set&lt;/li&gt;
+&lt;li&gt;It forwards traffic to the ALB&lt;/li&gt;
+&lt;li&gt;ALB sees you&apos;re hitting port 443 (HTTPS) that it&apos;s listening for&lt;/li&gt;
+&lt;li&gt;It forwards that to the best EC2 instance it can (the target group)&lt;/li&gt;
+&lt;li&gt;EC2 instance handles it, and returns the response back up the chain&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3&gt;IAM - Identity and Access Management&lt;/h3&gt;
+&lt;p&gt;How do you allow/deny access to certain things? That&apos;s IAM. It keeps track of roles and policies.&lt;/p&gt;
+&lt;p&gt;A role can be something like job role &quot;senior-developer&quot; or &quot;junior-developer,&quot; or it can be team-based like &quot;team-edward&quot; or &quot;team-jacob.&quot;&lt;/p&gt;
+&lt;p&gt;Policies describe four things:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Action&lt;/code&gt; - what you can do (e.g., run an EC2 instance, create a traffic forwarding rule)&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Resource&lt;/code&gt; - what you can use (e.g., only allow internal subnets or hosted zones to be used)&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Effect&lt;/code&gt; - whether you&apos;re allowed or denied access to the above&lt;/li&gt;
+&lt;li&gt;&lt;code class=&quot;language-text&quot;&gt;Condition&lt;/code&gt; - pattern matching conditional (e.g., you can only run micro or small EC2 instances)&lt;/li&gt;
+&lt;/ol&gt;
+&lt;p&gt;In this way, you can make sure only admins can wholesale delete resources and let something like CodeStar manage resources it has created. Devs should generally describe what they want in a CloudFormation template and let AWS take care of the rest.&lt;/p&gt;
+&lt;p&gt;For example, here&apos;s a reusable policy to limit what subnets CodeStar can run an EC2 instance on:&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;Version&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;2012-10-17&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;Statement&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Effect&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Allow&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Action&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;ec2:RunInstances&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Resource&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:subnet/subnet-SUBNET_ID_01&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:subnet/subnet-SUBNET_ID_02&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:subnet/subnet-SUBNET_ID_03&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:subnet/subnet-SUBNET_ID_04&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:network-interface/*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:instance/*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:volume/*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*::image/ami-*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:key-pair/*&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:ec2:*:*:security-group/*&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;Condition&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;token property&quot;&gt;&quot;StringEquals&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;ec2:InstanceType&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;t2.nano&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;t2.micro&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;t2.small&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This prevents someone from creating a CodeStar template that is hosted on an internet-facing EC2 instance that anyone can access by default. It also prevents them from using expensive instances. AWS doesn&apos;t allow limiting the number of resources that can be created by a template, but fingers crossed that&apos;s coming soon.&lt;/p&gt;
+&lt;p&gt;Then there&apos;s this template that will prevent someone from forwarding traffic from an internal instance an external ALB.&lt;/p&gt;
+&lt;div class=&quot;gatsby-highlight&quot; data-language=&quot;json&quot;&gt;&lt;pre class=&quot;language-json&quot;&gt;&lt;code class=&quot;language-json&quot;&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;Version&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;2012-10-17&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+  &lt;span class=&quot;token property&quot;&gt;&quot;Statement&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Effect&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Allow&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Action&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:GetChange&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:GetHostedZone&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:ListHostedZones&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:ListHostedZonesByName&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:ListResourceRecordSets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:GetHostedZoneCount&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53domains:*&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Resource&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;*&quot;&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Effect&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&quot;Allow&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Action&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:ChangeResourceRecordSets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;route53:ListResourceRecordSets&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;apigateway:GET&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+      &lt;span class=&quot;token property&quot;&gt;&quot;Resource&quot;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:route53:::hostedzone/HOSTED_ZONE_ID&quot;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;token string&quot;&gt;&quot;arn:aws:apigateway:*::/domainnames&quot;&lt;/span&gt;
+      &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;By adding these policies and &lt;code class=&quot;language-text&quot;&gt;ElasticLoadBalancingFullAccess&lt;/code&gt; to &lt;code class=&quot;language-text&quot;&gt;CodeStarWorker-MY_APP-CloudFormation&lt;/code&gt;, you&apos;ll be able to create internal-only EC2 instances and ALBs via CodeStar. No one but rogue admins would be able to allow access otherwise.&lt;/p&gt;
+&lt;h2&gt;Final thoughts&lt;/h2&gt;
+&lt;p&gt;AWS is super complicated, but I&apos;m glad they&apos;re taking steps to create more complete solutions like CodeStar that abstracts a lot of the complicated stuff away.&lt;/p&gt;
+&lt;p&gt;Sure, it&apos;s not a completely foolproof solution, but it&apos;s a good starting point for people like me who had no idea how to get started otherwise. By using CodeStar as a base, I&apos;m able to explore solutions that make sense in context instead of having all of AWS thrown at me.&lt;/p&gt;
+&lt;p&gt;I hope you all found my explanations of AWS tools and concepts helpful and not &lt;em&gt;too&lt;/em&gt; inaccurate. &lt;/p&gt;</content:encoded></item><item><title><![CDATA[November, December, January Movie Roundup]]></title><description><![CDATA[Going through the movies I watched in the last few months. Frozen II (November 30) 65 on Metacritic I enjoyed the untraditional story…]]></description><link>https://jeffchheng.github.io/brains-base/2020-01-17-movie-roundup/</link><guid isPermaLink="false">https://jeffchheng.github.io/brains-base/2020-01-17-movie-roundup/</guid><pubDate>Fri, 17 Jan 2020 12:00:00 GMT</pubDate><content:encoded>&lt;p&gt;Going through the movies I watched in the last few months.&lt;/p&gt;
 &lt;h2&gt;Frozen II (November 30)&lt;/h2&gt;
 &lt;p&gt;&lt;a href=&quot;https://www.metacritic.com/movie/frozen-ii&quot;&gt;65 on Metacritic&lt;/a&gt;&lt;/p&gt;
 &lt;p&gt;I enjoyed the untraditional story telling of &lt;em&gt;Frozen II&lt;/em&gt;. There wasn&apos;t a typical &quot;villain&quot; here, and the twist was telegraphed from miles away. What was untraditional was that the &quot;antagonist&quot; in this story, which was a wrong from the past that had to be righted.&lt;/p&gt;
@@ -37,7 +159,7 @@
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/1f853/katanagatari.jpg&quot;
+    href=&quot;/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/72e01/katanagatari.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -50,13 +172,14 @@
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;Katanagatari&quot;
         title=&quot;Katanagatari&quot;
-        src=&quot;/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/82472/katanagatari.jpg&quot;
-        srcset=&quot;/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/5aa83/katanagatari.jpg 150w,
-/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/afcd2/katanagatari.jpg 300w,
-/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/82472/katanagatari.jpg 600w,
-/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/2d017/katanagatari.jpg 900w,
-/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/1f853/katanagatari.jpg 1024w&quot;
+        src=&quot;/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/b4294/katanagatari.jpg&quot;
+        srcset=&quot;/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/75985/katanagatari.jpg 150w,
+/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/f93b5/katanagatari.jpg 300w,
+/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/b4294/katanagatari.jpg 600w,
+/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/8e1fc/katanagatari.jpg 900w,
+/brains-base/static/8b0ea3d14a7f9cd93faebc160291fb82/72e01/katanagatari.jpg 1024w&quot;
         sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
@@ -78,7 +201,7 @@
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/1d167/wolf-children.jpg&quot;
+    href=&quot;/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/d8d7f/wolf-children.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -91,13 +214,14 @@
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;Wolf Children&quot;
         title=&quot;Wolf Children&quot;
-        src=&quot;/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/82472/wolf-children.jpg&quot;
-        srcset=&quot;/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/5aa83/wolf-children.jpg 150w,
-/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/afcd2/wolf-children.jpg 300w,
-/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/82472/wolf-children.jpg 600w,
-/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/2d017/wolf-children.jpg 900w,
-/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/1d167/wolf-children.jpg 1032w&quot;
+        src=&quot;/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/b4294/wolf-children.jpg&quot;
+        srcset=&quot;/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/75985/wolf-children.jpg 150w,
+/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/f93b5/wolf-children.jpg 300w,
+/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/b4294/wolf-children.jpg 600w,
+/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/8e1fc/wolf-children.jpg 900w,
+/brains-base/static/05f40ad48b3c8cb48bab0282ad33b4a1/d8d7f/wolf-children.jpg 1032w&quot;
         sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
@@ -119,7 +243,7 @@
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/8179c/erased.jpg&quot;
+    href=&quot;/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/b17f8/erased.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -132,14 +256,15 @@
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;ERASED&quot;
         title=&quot;ERASED&quot;
-        src=&quot;/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/82472/erased.jpg&quot;
-        srcset=&quot;/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/5aa83/erased.jpg 150w,
-/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/afcd2/erased.jpg 300w,
-/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/82472/erased.jpg 600w,
-/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/2d017/erased.jpg 900w,
-/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/c35de/erased.jpg 1200w,
-/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/8179c/erased.jpg 1600w&quot;
+        src=&quot;/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/b4294/erased.jpg&quot;
+        srcset=&quot;/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/75985/erased.jpg 150w,
+/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/f93b5/erased.jpg 300w,
+/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/b4294/erased.jpg 600w,
+/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/8e1fc/erased.jpg 900w,
+/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/e5166/erased.jpg 1200w,
+/brains-base/static/1f5f736b6f5dbdd5fb4c0f22c7a096bd/b17f8/erased.jpg 1600w&quot;
         sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
@@ -155,7 +280,7 @@
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/6c315/your-name.jpg&quot;
+    href=&quot;/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/eea4a/your-name.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -168,14 +293,15 @@
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;Your Name&quot;
         title=&quot;Your Name&quot;
-        src=&quot;/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/82472/your-name.jpg&quot;
-        srcset=&quot;/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/5aa83/your-name.jpg 150w,
-/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/afcd2/your-name.jpg 300w,
-/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/82472/your-name.jpg 600w,
-/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/2d017/your-name.jpg 900w,
-/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/c35de/your-name.jpg 1200w,
-/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/6c315/your-name.jpg 1280w&quot;
+        src=&quot;/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/b4294/your-name.jpg&quot;
+        srcset=&quot;/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/75985/your-name.jpg 150w,
+/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/f93b5/your-name.jpg 300w,
+/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/b4294/your-name.jpg 600w,
+/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/8e1fc/your-name.jpg 900w,
+/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/e5166/your-name.jpg 1200w,
+/brains-base/static/c92a8cd5a5d83476907aa942b36780a9/eea4a/your-name.jpg 1280w&quot;
         sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
@@ -197,7 +323,7 @@
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/8179c/my-hero-academia.jpg&quot;
+    href=&quot;/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/b17f8/my-hero-academia.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -210,14 +336,15 @@
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;My Hero Academia&quot;
         title=&quot;My Hero Academia&quot;
-        src=&quot;/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/82472/my-hero-academia.jpg&quot;
-        srcset=&quot;/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/5aa83/my-hero-academia.jpg 150w,
-/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/afcd2/my-hero-academia.jpg 300w,
-/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/82472/my-hero-academia.jpg 600w,
-/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/2d017/my-hero-academia.jpg 900w,
-/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/c35de/my-hero-academia.jpg 1200w,
-/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/8179c/my-hero-academia.jpg 1600w&quot;
+        src=&quot;/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/b4294/my-hero-academia.jpg&quot;
+        srcset=&quot;/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/75985/my-hero-academia.jpg 150w,
+/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/f93b5/my-hero-academia.jpg 300w,
+/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/b4294/my-hero-academia.jpg 600w,
+/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/8e1fc/my-hero-academia.jpg 900w,
+/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/e5166/my-hero-academia.jpg 1200w,
+/brains-base/static/e77c60fa0ce992b9b557a937ad38c067/b17f8/my-hero-academia.jpg 1600w&quot;
         sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
@@ -231,7 +358,7 @@
     &gt;
       &lt;a
     class=&quot;gatsby-resp-image-link&quot;
-    href=&quot;/brains-base/static/5daf57fe451145685a8ee45c5a910d56/0c9fb/shadowbringers2.jpg&quot;
+    href=&quot;/brains-base/static/5daf57fe451145685a8ee45c5a910d56/6eed6/shadowbringers2.jpg&quot;
     style=&quot;display: block&quot;
     target=&quot;_blank&quot;
     rel=&quot;noopener&quot;
@@ -244,14 +371,15 @@
         class=&quot;gatsby-resp-image-image&quot;
         alt=&quot;Shadowbringers&quot;
         title=&quot;Shadowbringers&quot;
-        src=&quot;/brains-base/static/5daf57fe451145685a8ee45c5a910d56/82472/shadowbringers2.jpg&quot;
-        srcset=&quot;/brains-base/static/5daf57fe451145685a8ee45c5a910d56/5aa83/shadowbringers2.jpg 150w,
-/brains-base/static/5daf57fe451145685a8ee45c5a910d56/afcd2/shadowbringers2.jpg 300w,
-/brains-base/static/5daf57fe451145685a8ee45c5a910d56/82472/shadowbringers2.jpg 600w,
-/brains-base/static/5daf57fe451145685a8ee45c5a910d56/2d017/shadowbringers2.jpg 900w,
-/brains-base/static/5daf57fe451145685a8ee45c5a910d56/c35de/shadowbringers2.jpg 1200w,
-/brains-base/static/5daf57fe451145685a8ee45c5a910d56/0c9fb/shadowbringers2.jpg 1790w&quot;
+        src=&quot;/brains-base/static/5daf57fe451145685a8ee45c5a910d56/b4294/shadowbringers2.jpg&quot;
+        srcset=&quot;/brains-base/static/5daf57fe451145685a8ee45c5a910d56/75985/shadowbringers2.jpg 150w,
+/brains-base/static/5daf57fe451145685a8ee45c5a910d56/f93b5/shadowbringers2.jpg 300w,
+/brains-base/static/5daf57fe451145685a8ee45c5a910d56/b4294/shadowbringers2.jpg 600w,
+/brains-base/static/5daf57fe451145685a8ee45c5a910d56/8e1fc/shadowbringers2.jpg 900w,
+/brains-base/static/5daf57fe451145685a8ee45c5a910d56/e5166/shadowbringers2.jpg 1200w,
+/brains-base/static/5daf57fe451145685a8ee45c5a910d56/6eed6/shadowbringers2.jpg 1790w&quot;
         sizes=&quot;(max-width: 600px) 100vw, 600px&quot;
+        style=&quot;width:100%;height:100%;margin:0;vertical-align:middle;position:absolute;top:0;left:0;&quot;
         loading=&quot;lazy&quot;
       /&gt;
   &lt;/a&gt;
@@ -526,9 +654,9 @@ cleanup function.
 
 &lt;span class=&quot;token keyword&quot;&gt;export&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;token function&quot;&gt;reducer&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token parameter&quot;&gt;state&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; type&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
   &lt;span class=&quot;token keyword&quot;&gt;switch&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;type&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;save&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;state&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;key&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; value &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;reset&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; initialState&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;save&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;...&lt;/span&gt;state&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;key&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; value &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;case&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;reset&apos;&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; initialState&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;token keyword&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;token keyword&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;token class-name&quot;&gt;Error&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
 
@@ -568,7 +696,7 @@ cleanup function.
 
   &lt;span class=&quot;token function&quot;&gt;useEffect&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
     &lt;span class=&quot;token keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;shouldSnapshot &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; shouldSave &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; key &lt;span class=&quot;token operator&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; value&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;token function&quot;&gt;dispatch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; type&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;save&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token function&quot;&gt;dispatch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; type&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;save&apos;&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;key&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; value&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; shouldSave&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; shouldSnapshot&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; dispatch&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
@@ -587,7 +715,7 @@ cleanup function.
     &lt;span class=&quot;token function&quot;&gt;setShouldSnapshot&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;true&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
 
     &lt;span class=&quot;token keyword&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;token operator&quot;&gt;=&gt;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;token function&quot;&gt;dispatch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; type&lt;span class=&quot;token punctuation&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;reset&apos;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
+      &lt;span class=&quot;token function&quot;&gt;dispatch&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;{&lt;/span&gt; type&lt;span class=&quot;token operator&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;token string&quot;&gt;&apos;reset&apos;&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
       &lt;span class=&quot;token function&quot;&gt;setShouldSnapshot&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;token boolean&quot;&gt;false&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;
   &lt;span class=&quot;token punctuation&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;token punctuation&quot;&gt;[&lt;/span&gt;dispatch&lt;span class=&quot;token punctuation&quot;&gt;,&lt;/span&gt; setShouldSnapshot&lt;span class=&quot;token punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;token punctuation&quot;&gt;;&lt;/span&gt;
