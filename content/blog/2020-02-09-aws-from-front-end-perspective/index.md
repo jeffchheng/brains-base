@@ -42,11 +42,11 @@ CodePipeline ties your source control, build, and deploy into one neat pipeline.
 
 ### Parameter Store
 
-Parameter Store is for storing configuration or secrets in one place. I'm able to specify who can access a secret through tags, and only those resources are able to retrieve and decrypt the secret.
+Parameter Store is for storing configuration or secrets in one place. You can specify who has access to a secret through tags, and only those resources are able to retrieve and decrypt the secret.
 
-For example, I add a client secret. I add a tag, where the key is `awscodestar:projectArn` and the value is `arn:aws:codestar:region:account:project/my-project`. This means only my CodeStar project can use it during the build step.
+For example, you add a client secret, and tag it with key = `awscodestar:projectArn` and value = `arn:aws:codestar:region:account:project/your-project`. This means only your CodeStar project can use it during the build step.
 
-In CodeBuild, I can specify an environment variable `client_secret`, and the value is `/the/path/to/the/client_secret`. The next time I rebuild, the CodeStar worker will be able to get and decrypt that parameter, assuming I've added the right access controls (see the IAM section below).
+In CodeBuild, you can specify an environment variable `client_secret`, and the value is `/the/path/to/the/client_secret`. The next time you rebuild, the CodeStar worker will be able to get and decrypt that parameter, assuming you've added the right access controls (see the IAM section below).
 
 ### CloudFormation
 
