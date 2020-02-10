@@ -6,7 +6,11 @@ description: EC2? ELB? IAM? What?
 
 EC2? ELB? IAM? What?
 
-Do you not know much about AWS/infrastructure and wanna learn more, at least a high level? I'll do my best to explain things from a front end engineer's perspective.
+Me: Does anyone want a high level overview of AWS?
+
+No one:
+
+Me: Oh... Well... I'll do my best to explain things from a front end engineer's perspective anyway. :'(
 
 ## Background
 
