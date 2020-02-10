@@ -6,7 +6,7 @@ description: EC2? ELB? IAM? What?
 
 EC2? ELB? IAM? What?
 
-Me: Does anyone want a high level overview of AWS?
+Me: Who wants a high level overview of AWS?
 
 No one:
 
