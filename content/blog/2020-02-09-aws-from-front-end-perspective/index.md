@@ -40,6 +40,14 @@ CodeDeploy handles "deployment groups" (i.e., the environments you want to deplo
 
 CodePipeline ties your source control, build, and deploy into one neat pipeline. You can add actions for test, staging, and prod. One stage flows into the next until everything's done.
 
+### Parameter Store
+
+Parameter Store is for storing configuration or secrets in one place. I'm able to specify who can access a secret through tags, and only those resources are able to retrieve and decrypt the secret.
+
+For example, I add a client secret. I add a tag, where the key is `awscodestar:projectArn` and the value is `arn:aws:codestar:region:account:project/my-project`. This means only my CodeStar project can use it during the build step.
+
+In CodeBuild, I can specify an environment variable `client_secret`, and the value is `/the/path/to/the/client_secret`. The next time I rebuild, the CodeStar worker will be able to get and decrypt that parameter, assuming I've added the right access controls (see the IAM section below).
+
 ### CloudFormation
 
 CodeStar automatically creates a template.yml. In the template, you describe resources you want like "a small server," "route my traffic to a pretty URL," "these're my certifates," "only let these IPs access my app," etc.
@@ -175,6 +183,29 @@ Then there's this template that will prevent someone from forwarding traffic fro
 ```
 
 By adding these policies and `ElasticLoadBalancingFullAccess` to `CodeStarWorker-MY_APP-CloudFormation`, you'll be able to create internal-only EC2 instances and ALBs via CodeStar. No one but rogue admins would be able to allow access otherwise.
+
+Finally, you can add the following policy to `CodeStarWorker-MY_APP-ToolChain` to allow CodeBuild to get and decrypt Parameter Store values:
+
+```json
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "ssm:GetParameters",
+        "ssm:GetParameter"
+      ],
+      "Resource": "*",
+      "Condition": {
+        "StringEquals": {
+          "sss:resourceTag/awscodestar/projectArn": "arn:aws:codestar:region:account:project/my-app"
+        }
+      }
+    }
+  ]
+}
+```
 
 ## Final thoughts
 
