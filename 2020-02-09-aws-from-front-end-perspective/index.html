@@ -16,6 +16,10 @@
 <p>CodeBuild handles building from your source (GitHub or CodeCommit). You can specify environment variables through a fairly easy-to-use console.</p>
 <p>CodeDeploy handles "deployment groups" (i.e., the environments you want to deploy an app, such as test, staging, and prod).</p>
 <p>CodePipeline ties your source control, build, and deploy into one neat pipeline. You can add actions for test, staging, and prod. One stage flows into the next until everything's done.</p>
+<h3>Parameter Store</h3>
+<p>Parameter Store is for storing configuration or secrets in one place. You can specify who has access to a secret through tags, and only those resources are able to retrieve and decrypt the secret.</p>
+<p>For example, you add a client secret, and tag it with key = <code class="language-text">awscodestar:projectArn</code> and value = <code class="language-text">arn:aws:codestar:region:account:project/your-project</code>. This means only your CodeStar project can use it during the build step.</p>
+<p>In CodeBuild, you can specify an environment variable <code class="language-text">client_secret</code>, and the value is <code class="language-text">/the/path/to/the/client_secret</code>. The next time you rebuild, the CodeStar worker will be able to get and decrypt that parameter, assuming you've added the right access controls (see the IAM section below).</p>
 <h3>CloudFormation</h3>
 <p>CodeStar automatically creates a template.yml. In the template, you describe resources you want like "a small server," "route my traffic to a pretty URL," "these're my certifates," "only let these IPs access my app," etc.</p>
 <p>CloudFormation takes that template, compares it with your previous template, and it creates, updates, or deletes the resources you've added, changed, or removed.</p>
@@ -119,6 +123,25 @@
   <span class="token punctuation">]</span>
 <span class="token punctuation">}</span></code></pre></div>
 <p>By adding these policies and <code class="language-text">ElasticLoadBalancingFullAccess</code> to <code class="language-text">CodeStarWorker-MY_APP-CloudFormation</code>, you'll be able to create internal-only EC2 instances and ALBs via CodeStar. No one but rogue admins would be able to allow access otherwise.</p>
+<p>Finally, you can add the following policy to <code class="language-text">CodeStarWorker-MY_APP-ToolChain</code> to allow CodeBuild to get and decrypt Parameter Store values:</p>
+<div class="gatsby-highlight" data-language="json"><pre class="language-json"><code class="language-json"><span class="token punctuation">{</span>
+  <span class="token property">"Version"</span><span class="token operator">:</span> <span class="token string">"2012-10-17"</span><span class="token punctuation">,</span>
+  <span class="token property">"Statement"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token property">"Effect"</span><span class="token operator">:</span> <span class="token string">"Allow"</span><span class="token punctuation">,</span>
+      <span class="token property">"Action"</span><span class="token operator">:</span> <span class="token punctuation">[</span>
+        <span class="token string">"ssm:GetParameters"</span><span class="token punctuation">,</span>
+        <span class="token string">"ssm:GetParameter"</span>
+      <span class="token punctuation">]</span><span class="token punctuation">,</span>
+      <span class="token property">"Resource"</span><span class="token operator">:</span> <span class="token string">"*"</span><span class="token punctuation">,</span>
+      <span class="token property">"Condition"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+        <span class="token property">"StringEquals"</span><span class="token operator">:</span> <span class="token punctuation">{</span>
+          <span class="token property">"sss:resourceTag/awscodestar/projectArn"</span><span class="token operator">:</span> <span class="token string">"arn:aws:codestar:region:account:project/my-app"</span>
+        <span class="token punctuation">}</span>
+      <span class="token punctuation">}</span>
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>
+<span class="token punctuation">}</span></code></pre></div>
 <h2>Final thoughts</h2>
 <p>AWS is super complicated, but I'm glad they're taking steps to create more complete solutions like CodeStar that abstracts a lot of the complicated stuff away.</p>
 <p>Sure, it's not a completely foolproof solution, but it's a good starting point for people like me who had no idea how to get started otherwise. By using CodeStar as a base, I'm able to explore solutions that make sense in context instead of having all of AWS thrown at me.</p>
