@@ -6,7 +6,9 @@ description: Weeks of interviews have taught me one thing, and it's that intervi
  
 Weeks of interviews have taught me one thing, and it's that interviewing sucks.
  
-But thank god it's over now that I've accepted a new position at Amazon as a front end engineer working on Alexa Machine Learning Platform Services (say that 5 times fast). I signed an NDA at Amazon, so I can't talk about specifics, but I can speak to some of the other companies I've interviewed at, my experiences, and key takeaways.
+But thank god it's over now that I've accepted a new position at Amazon as a front end engineer working on Alexa Machine Learning Platform Services (say that 5 times fast).
+
+I signed an NDA at Amazon, so I can't talk about specifics there; however I can speak to some of the other companies I've interviewed at, my experiences, and key takeaways.
  
 ## Key Takeaways (TL;DR)
  
@@ -30,7 +32,7 @@ Contacted by recruiter.
  
 Shout-outs to Facebook for having one of the best interviewing experiences, even though I didn't get in. They really pioneered the way for front end engineer interviews to be less about data structures and algorithms in the Leetcode sense and more about JavaScript, DOM knowledge, and tree traversals.
  
-The interviewers were all incredibly prepared. I could tell they knew every possible solution to the problem they asked of me. They were quick to point out mistakes or offer hints. The questions were well defined and able to be answered quickly.
+The interviewers were all incredibly prepared. I could tell they knew multiple solutions to the questions they asked. They were quick to point out mistakes or offer hints. The questions were well defined and able to be answered quickly.
  
 Facebook interviews are also pretty rapid-fire. Every round had two coding questions I was able to do at least.
  
@@ -69,7 +71,9 @@ System design: Design Facebook. Again, I was really, really bad at system design
 Three coding questions. They didn't take the entire time so a lot of the interview was pretty awkward. I definitely would've liked more structure or more coding questions.
  
 Given a binary search tree, find and return two values that add up a target. A very typical Leetcode problem. I came up with an O(N) space algorithm, which wasn't what the interviewer wanted. I think they wanted the left and right pointer solution or Set solution.
- 
+
+Reverse a string (lol).
+
 Given a list of managers and their employees, find the CEO or something? I don't recall. It requires building a map and iterating to find the solution - typical stuff.
  
 ## Carta (2019)
@@ -130,15 +134,15 @@ This was a fun problem using your typical tree traversal while keeping track of 
  
 System design: design an API for managing a contact list. This was one of the worst interview experiences as well. One, the question isn't great for a front end engineer. Second, the interviewer had unspoken questions that he wanted me to answer. I could tell he was annoyed or not accepting any answer from me that didn't conform to the format he wanted without explicitly telling me.
  
-I design the usual CRUD operations, but I think he literally wanted me to define "okay, this is the HTTP accept and object shape" and "this is the HTTP content type and object shape" when they really didn't differ that much. Also scaling issues?
+I designed the usual CRUD operations, but I think he literally wanted me to define "okay, this is the HTTP accept and object shape" and "this is the HTTP content type and object shape" when they really didn't differ that much. Also scaling issues?
  
 Deep dive: You need to be ready to talk about a project for an hour straight where the interviewer will drill you on what you worked on, technical/people challenges, and so on.
  
-One of the coding questions was actually an existing MVC app with 7 bugs and repro steps for all of them, and it was up to me to fix them. There were problems like not merging objects correctly, CSS issues, XSS problems, and unmounting DOM nodes. This is interesting in concept, but the high pressure situation of an interview meant I wasn't able to fully commit by brain to it while working against the clock. Huge props to any Dropboxer who manages to fix these in less than an hour.
+One of the coding questions was actually an existing MVC app with 7 bugs and repro steps for all of them, and it was up to me to fix them. There were problems like not merging objects correctly, CSS issues, XSS problems, and unmounting DOM nodes. This is interesting in concept, but the high pressure situation of an interview meant I wasn't able to fully commit my brain to it while working against the clock. Huge props to any Dropboxer who manages to fix these in less than an hour.
  
 I don't remember the second coding question, but I recall it going pretty well.
  
-Again, I don't think 2 coding questions provide a good enough signal, but I could just be salty.
+Again, I don't think two coding questions provide a good enough signal, but I could just be salty.
  
 ## Amazon (2020)
  
