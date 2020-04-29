@@ -2,7 +2,7 @@ import Typography from "typography"
 import Wordpress2016 from "typography-theme-wordpress-2016"
 
 Wordpress2016.overrideThemeStyles = () => {
-  const mainColor = `#03dac5`;
+  const mainColor = `#03dac5`
   return {
     "a.gatsby-resp-image-link": {
       boxShadow: `none`,
@@ -15,19 +15,19 @@ Wordpress2016.overrideThemeStyles = () => {
       color: `white`,
       borderLeft: `0.25rem solid white`,
     },
-    "a": {
+    a: {
       color: mainColor,
     },
-    "h1": {
+    h1: {
       color: mainColor,
     },
-    "h2": {
+    h2: {
       color: mainColor,
     },
-    "h3": {
+    h3: {
       color: mainColor,
     },
-    "h4": {
+    h4: {
       color: mainColor,
     },
   }
