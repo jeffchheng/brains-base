@@ -1,14 +1,14 @@
 ---
 title: Terrace House - Boys & Girls in the City
 date: "2020-05-14T12:00:00.000Z"
-description: I did it! I finished Boys & Girls in the City!
+description: We did it! We finished Boys & Girls in the City!
 ---
 
-I did it! I finished Boys & Girls in the City! As expected, I enjoyed it way more than Aloha State.
+Nicole and I did it! We finished Boys & Girls in the City! As expected, I enjoyed it way more than Aloha State.
 
 Tokyo is truly the best city for the Terrace House concept. With it being the capital and most densely packed city, it’s easy to find interesting people, good food, and amazing sights.
 
-But enough about that. It’s time for me to get into my thoughts about the cast members and their progression through the series.
+But enough about that. Let's get into my thoughts about the cast members and their progression through the series.
 
 ## Makoto Hasegawa, 22, university student/baseball player
 
@@ -144,7 +144,7 @@ At least that led to her and Arman getting together.
 
 This season started off strong. So much great drama with the initial cast alone.
 
-It kind of dragged a bit when Natsumi came on. Despite the drama she was added, it was more infuriating and took away from other storylines.
+It kind of dragged a bit when Natsumi came on. Despite the drama she added, it was more infuriating and took away from other storylines.
 
 Despite Riko and Hayato being trash people, the series ended strong. I’ll take Misaki and Byrnes + Martha and Arman. The house had a great vibe by the end and they didn’t end on a completely dysfunctional note like Aloha State.
 
