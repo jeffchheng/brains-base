@@ -64,7 +64,7 @@ Despite really overstaying his welcome, he did have a good last-minute romance b
 
 Arisa didn’t really leave much of an impression on me. Yes, it’s great she has her own career and is focusing on it. But at the same time, she was so busy with work that she rarely did anything with the group. And her work wasn’t interesting enough to become a focus of her show or have its own storyline.
 
-The best part of her stay was the Costco rejection. Tap tried to ask her out, and she was not having it and suggested they go to Cotsco as a group. Apparently, some English-speaking viewers misconstrued this scene and thought Cotsco was a hot date spot in Japan. Hilarious.
+The best part of her stay was the Costco rejection. Tap tried to ask her out, and she was not having it and suggested they go to Costco as a group. Apparently, some English-speaking viewers misconstrued this scene and thought Costco was a hot date spot in Japan. Hilarious.
 
 ## Hikaru Ota, 18, model
 
