@@ -26,38 +26,41 @@ workbox.clientsClaim();
  */
 self.__precacheManifest = [
   {
-    "url": "webpack-runtime-ec80650d6fa436f540e6.js"
+    "url": "webpack-runtime-6fa67f2807d8cc9b8ec3.js"
   },
   {
-    "url": "framework-5dd3c501fd049989ea3a.js"
+    "url": "framework-8e528b732ab2eaadb7b7.js"
   },
   {
     "url": "styles.0d2d5d9f1076fcb7ed20.css"
   },
   {
-    "url": "styles-37d63a57eaf6d055b3bc.js"
+    "url": "styles-755093da0c07f4b49226.js"
   },
   {
-    "url": "app-ed60d2ca55113524d9df.js"
+    "url": "app-a215278520ba2f3ec43f.js"
   },
   {
-    "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-a280e1b1a70cffe6109c.js"
+    "url": "component---node-modules-gatsby-plugin-offline-app-shell-js-92db451aa9797c60e79a.js"
   },
   {
     "url": "offline-plugin-app-shell-fallback/index.html",
-    "revision": "e045bc4068973ba2a2d4d81ddd510974"
+    "revision": "ae61d9ead075e8624b287aa216429d9c"
   },
   {
     "url": "page-data/offline-plugin-app-shell-fallback/page-data.json",
-    "revision": "c355c8040c47a63bfb3360e4b7cb6553"
+    "revision": "c7047792c6f91b88e0d9abc0cd819e92"
   },
   {
     "url": "page-data/app-data.json",
-    "revision": "2db8b2825350d2e35a7a38a1266a4dca"
+    "revision": "dfc6c0236c2e51311a4f5793fad601e0"
+  },
+  {
+    "url": "polyfill-c38cd845a4181427323c.js"
   },
   {
     "url": "manifest.webmanifest",
-    "revision": "a50d7db8c0833054c9990f086889da73"
+    "revision": "23bab642f527435cdb2725b91e6a79b8"
   }
 ].concat(self.__precacheManifest || []);
 workbox.precaching.suppressWarnings();
@@ -81,7 +84,7 @@ const navigationRoute = new NavigationRoute(async ({ event }) => {
   // Check for resources + the app bundle
   // The latter may not exist if the SW is updating to a new version
   const resources = await idbKeyval.get(`resources:${pathname}`)
-  if (!resources || !(await caches.match(`/brains-base/app-ed60d2ca55113524d9df.js`))) {
+  if (!resources || !(await caches.match(`/brains-base/app-a215278520ba2f3ec43f.js`))) {
     return await fetch(event.request)
   }
 
