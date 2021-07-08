@@ -1,7 +1,7 @@
 ---
 title: April and May Movie Roundup
 date: "2021-05-30T12:00:00.000Z"
-description: todo
+description: Going through the movies I watched in the last month now that I'm fully vaccinated.
 ---
 
 Going through the movies I watched in the last month now that I'm fully vaccinated.
