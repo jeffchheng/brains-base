@@ -170,11 +170,11 @@
 
   <span class="token keyword">return</span> <span class="token operator">&lt;</span>ReportProblem stateSnapshot<span class="token operator">=</span><span class="token punctuation">{</span> state <span class="token punctuation">}</span> <span class="token operator">/</span><span class="token operator">></span><span class="token punctuation">;</span>
 <span class="token punctuation">}</span></code></pre></div>
-<p>Basically, <code class="language-text">&lt;SnapshotWrapper /&gt;</code> provides the app with a few functions, a boolean, and a state snapshot through <a href="https://reactjs.org/docs/context.html">the new Context API</a>.</p>
+<p>Basically, <code class="language-text">&lt;SnapshotWrapper /></code> provides the app with a few functions, a boolean, and a state snapshot through <a href="https://reactjs.org/docs/context.html">the new Context API</a>.</p>
 <ul>
-<li><code class="language-text">SnapshotDispatch</code> is used by <code class="language-text">useSnapshot</code> to snapshot state. It's also used by <code class="language-text">&lt;ReportProblemWrapper /&gt;</code> to reset the state when it is no longer needed.</li>
-<li><code class="language-text">StateSnapshot</code> is used by <code class="language-text">&lt;ReportProblemWapper /&gt;</code> to pass on to your <code class="language-text">&lt;ReportProblem /&gt;</code> component that sends the state off to your data store or whatever.</li>
-<li><code class="language-text">SetShouldSnapshot</code> is used by <code class="language-text">&lt;ReportProblemWapper /&gt;</code> to tell users of <code class="language-text">useSnapshot</code> to save their current values.</li>
+<li><code class="language-text">SnapshotDispatch</code> is used by <code class="language-text">useSnapshot</code> to snapshot state. It's also used by <code class="language-text">&lt;ReportProblemWrapper /></code> to reset the state when it is no longer needed.</li>
+<li><code class="language-text">StateSnapshot</code> is used by <code class="language-text">&lt;ReportProblemWapper /></code> to pass on to your <code class="language-text">&lt;ReportProblem /></code> component that sends the state off to your data store or whatever.</li>
+<li><code class="language-text">SetShouldSnapshot</code> is used by <code class="language-text">&lt;ReportProblemWapper /></code> to tell users of <code class="language-text">useSnapshot</code> to save their current values.</li>
 <li><code class="language-text">ShouldSnapshot</code> is used by <code class="language-text">useSnapshot</code> to determine whether it should save its current value.</li>
 </ul>
 <p>With this, whenever someone fetches data through <code class="language-text">useFetch</code> instead of a thunk, they can pair it with <code class="language-text">useSnapshot</code> to save data to send in crash logs. Of course, you can technically save anything that's available in render, but I think saving the results of data fetching is where a lot of apprehension comes from.</p>
